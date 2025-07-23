@@ -398,7 +398,7 @@ export default function ReportHistory({
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [dateFilter, setDateFilter] = useState("all")
-  const [configFilter, setConfigFilter] = useState(configId || "all")
+  const [configFilter, setConfigFilter] = useState("all") // Always start with "all" for the filter dropdown
 
   // Get all reports from all configurations
   const getAllReports = () => {
@@ -418,8 +418,15 @@ export default function ReportHistory({
     return allReports.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime())
   }
 
+  // Convert configId to string to match data keys, and ensure fallback data
+  const configIdStr = configId?.toString()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const historyData = configId ? ((reportHistoryData as any)[configId] || { reports: [] }) : { reports: getAllReports() }
+  const historyData = configIdStr && (reportHistoryData as any)[configIdStr] 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ? (reportHistoryData as any)[configIdStr]
+    : configId 
+      ? { reports: [], configName: configName || "Unknown Configuration", configType: "Unknown", deliveryMethod: "unknown" }
+      : { reports: getAllReports() }
   const { configName: singleConfigName, configType, deliveryMethod, reports } = historyData
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -427,7 +434,11 @@ export default function ReportHistory({
     const matchesSearch = report.generatedAt.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          (report.configName && report.configName.toLowerCase().includes(searchQuery.toLowerCase()))
     const matchesStatus = statusFilter === "all" || report.status === statusFilter
-    const matchesConfig = configFilter === "all" || report.configId === configFilter
+    
+    // For specific config pages, we don't need to filter by config since all reports are already from that config
+    // For all reports page, we filter by configId
+    const matchesConfig = configId ? true : (configFilter === "all" || report.configId === configFilter)
+    
     return matchesSearch && matchesStatus && matchesConfig
   })
 
