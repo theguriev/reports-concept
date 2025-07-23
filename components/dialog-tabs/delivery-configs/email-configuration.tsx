@@ -11,6 +11,11 @@ export function EmailConfiguration({
   onAddEmailRecipient,
   onUpdateEmailRecipient,
   onRemoveEmailRecipient,
+}: {
+  emailRecipients: string[];
+  onAddEmailRecipient: () => void;
+  onUpdateEmailRecipient: (index: number, value: string) => void;
+  onRemoveEmailRecipient: (index: number) => void;
 }) {
   return (
     <div className="space-y-4 p-4 border rounded-lg bg-gray-50">

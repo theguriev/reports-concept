@@ -16,6 +16,16 @@ export function DeliveryTab({
   isTestingConnection,
   connectionStatus,
   onTestConnection,
+}: {
+  deliveryMethod: string;
+  onDeliveryMethodChange: (value: string) => void;
+  emailRecipients: string[];
+  onAddEmailRecipient: () => void;
+  onUpdateEmailRecipient: (index: number, value: string) => void;
+  onRemoveEmailRecipient: (index: number) => void;
+  isTestingConnection: boolean;
+  connectionStatus: string | null;
+  onTestConnection: () => void;
 }) {
   return (
     <div className="space-y-6">

@@ -7,7 +7,13 @@ import { Textarea } from "@/components/ui/textarea"
 
 const reportTypes = ["Campaign", "Customer", "Abandoned Cart", "Revenue", "Engagement", "Deliverability"]
 
-export function BasicInfoTab({ selectedReportType, onReportTypeChange }) {
+export function BasicInfoTab({ 
+  selectedReportType, 
+  onReportTypeChange 
+}: { 
+  selectedReportType: string; 
+  onReportTypeChange: (value: string) => void; 
+}) {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold">Basic Information</h3>

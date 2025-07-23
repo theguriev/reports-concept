@@ -18,7 +18,9 @@ import {
   Clock,
   Mail,
   Server,
-  Users,
+  User,
+  Webhook,
+  XCircle,
   Eye,
 } from "lucide-react"
 
@@ -67,7 +69,8 @@ const scheduledReports = [
   },
 ]
 
-export default function ScheduledReports({ onViewDetail }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ScheduledReports({ onViewDetail }: { onViewDetail: any }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("all")
   const [reports, setReports] = useState(scheduledReports)
@@ -78,26 +81,34 @@ export default function ScheduledReports({ onViewDetail }) {
     return matchesSearch && matchesTab
   })
 
-  const getStatusIcon = (status) => {
-    return status === "active" ? (
-      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-    ) : (
-      <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-    )
-  }
-
-  const getDeliveryIcon = (method) => {
-    switch (method) {
-      case "email":
-        return <Mail className="h-4 w-4 text-gray-500" />
-      case "sftp":
-        return <Server className="h-4 w-4 text-gray-500" />
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getStatusIcon = (status: any) => {
+    switch (status) {
+      case "active":
+        return <CheckCircle className="h-4 w-4 text-green-500" />
+      case "paused":
+        return <Clock className="h-4 w-4 text-yellow-500" />
       default:
-        return <Users className="h-4 w-4 text-gray-500" />
+        return <XCircle className="h-4 w-4 text-red-500" />
     }
   }
 
-  const handleToggleStatus = (id) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getDeliveryIcon = (method: any) => {
+    switch (method) {
+      case "email":
+        return <Mail className="h-4 w-4" />
+      case "sftp":
+        return <Server className="h-4 w-4" />
+      case "webhook":
+        return <Webhook className="h-4 w-4" />
+      default:
+        return <User className="h-4 w-4" />
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleToggleStatus = (id: any) => {
     setReports(
       reports.map((report) =>
         report.id === id ? { ...report, status: report.status === "active" ? "paused" : "active" } : report,
@@ -105,7 +116,8 @@ export default function ScheduledReports({ onViewDetail }) {
     )
   }
 
-  const handleDeleteReport = (id) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDeleteReport = (id: any) => {
     setReports(reports.filter((report) => report.id !== id))
   }
 

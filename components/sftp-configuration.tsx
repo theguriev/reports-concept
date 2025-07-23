@@ -9,12 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Server, CheckCircle, AlertTriangle, TestTube } from "lucide-react"
-import { format } from "date-fns" // Import for date formatting
 
 export default function SftpConfiguration() {
   const [isTestingConnection, setIsTestingConnection] = useState(false)
-  const [connectionStatus, setConnectionStatus] = useState(null)
-  const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd")) // Declare date variable
+  const [connectionStatus, setConnectionStatus] = useState<string | null>(null)
 
   const handleTestConnection = () => {
     setIsTestingConnection(true)
@@ -92,7 +90,7 @@ export default function SftpConfiguration() {
               {/* File Naming */}
               <div>
                 <Label htmlFor="file-naming">File Naming Pattern</Label>
-                <Input id="file-naming" placeholder={`report_${date}.csv`} defaultValue={`report_${date}.csv`} />
+                <Input id="file-naming" placeholder="report_2024-01-01.csv" defaultValue="report_{{date}}.csv" />
                 <p className="text-sm text-gray-500 mt-1">
                   Available variables: {`{{date}}, {{time}}, {{report_name}}, {{type}}`}
                 </p>
@@ -149,7 +147,7 @@ export default function SftpConfiguration() {
                     <h4 className="font-medium">Daily Campaign Report</h4>
                     <Badge variant="secondary">CSV</Badge>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{`daily_campaign_${date}.csv`}</p>
+                  <p className="text-sm text-gray-600 mb-2">daily_campaign_2024-01-01.csv</p>
                   <p className="text-xs text-gray-500">Includes: Opens, Clicks, Conversions, Revenue</p>
                 </div>
 
@@ -158,7 +156,7 @@ export default function SftpConfiguration() {
                     <h4 className="font-medium">Weekly Summary</h4>
                     <Badge variant="secondary">Excel</Badge>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{`weekly_summary_${date}.xlsx`}</p>
+                  <p className="text-sm text-gray-600 mb-2">weekly_summary_2024-01-01.xlsx</p>
                   <p className="text-xs text-gray-500">Includes: Campaign performance, Customer metrics</p>
                 </div>
               </div>

@@ -71,7 +71,8 @@ const reportDetail = {
   ],
 }
 
-export default function ScheduledReportDetail({ onBack }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ScheduledReportDetail({ onBack }: { onBack: any }) {
   const [reportStatus, setReportStatus] = useState(reportDetail.status)
   const [isRunning, setIsRunning] = useState(false)
 
@@ -87,7 +88,8 @@ export default function ScheduledReportDetail({ onBack }) {
     }, 3000)
   }
 
-  const getStatusIcon = (status) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getStatusIcon = (status: any) => {
     switch (status) {
       case "delivered":
         return <CheckCircle className="h-4 w-4 text-green-500" />

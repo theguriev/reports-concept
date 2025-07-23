@@ -14,19 +14,14 @@ import { DataSelectionTab } from "./dialog-tabs/data-selection-tab"
 import { ScheduleTab } from "./dialog-tabs/schedule-tab"
 import { DeliveryTab } from "./dialog-tabs/delivery-tab"
 
-export function CreateConfigurationDialog({ onClose }) {
-  const [selectedMetrics, setSelectedMetrics] = useState([])
+export function CreateConfigurationDialog({ onClose }: { onClose: () => void }) {
   const [selectedReportType, setSelectedReportType] = useState("")
   const [deliveryMethod, setDeliveryMethod] = useState("")
   const [emailRecipients, setEmailRecipients] = useState([""])
   const [isTestingConnection, setIsTestingConnection] = useState(false)
-  const [connectionStatus, setConnectionStatus] = useState(null)
-  const [selectedCampaigns, setSelectedCampaigns] = useState([])
+  const [connectionStatus, setConnectionStatus] = useState<string | null>(null)
+  const [selectedCampaigns, setSelectedCampaigns] = useState<string[]>([])
   const [campaignSearchQuery, setCampaignSearchQuery] = useState("")
-
-  const handleMetricToggle = (metric) => {
-    setSelectedMetrics((prev) => (prev.includes(metric) ? prev.filter((m) => m !== metric) : [...prev, metric]))
-  }
 
   const addEmailRecipient = () => {
     if (emailRecipients.length < 5) {
@@ -34,13 +29,13 @@ export function CreateConfigurationDialog({ onClose }) {
     }
   }
 
-  const updateEmailRecipient = (index, value) => {
+  const updateEmailRecipient = (index: number, value: string) => {
     const updated = [...emailRecipients]
     updated[index] = value
     setEmailRecipients(updated)
   }
 
-  const removeEmailRecipient = (index) => {
+  const removeEmailRecipient = (index: number) => {
     setEmailRecipients(emailRecipients.filter((_, i) => i !== index))
   }
 
@@ -52,17 +47,17 @@ export function CreateConfigurationDialog({ onClose }) {
     }, 2000)
   }
 
-  const handleCampaignToggle = (campaignId) => {
+  const handleCampaignToggle = (campaignId: string) => {
     setSelectedCampaigns((prev) =>
       prev.includes(campaignId) ? prev.filter((id) => id !== campaignId) : [...prev, campaignId],
     )
   }
 
-  const handleSelectAllCampaigns = (campaigns) => {
+  const handleSelectAllCampaigns = (campaigns: { id: number }[]) => {
     if (selectedCampaigns.length === campaigns.length) {
       setSelectedCampaigns([])
     } else {
-      setSelectedCampaigns(campaigns.map((c) => c.id))
+      setSelectedCampaigns(campaigns.map((c) => c.id.toString()))
     }
   }
 

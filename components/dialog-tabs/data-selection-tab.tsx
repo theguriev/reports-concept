@@ -7,6 +7,12 @@ export function DataSelectionTab({
   onCampaignSearchChange,
   onCampaignToggle,
   onSelectAllCampaigns,
+}: {
+  selectedCampaigns: string[];
+  campaignSearchQuery: string;
+  onCampaignSearchChange: (value: string) => void;
+  onCampaignToggle: (campaignId: string) => void;
+  onSelectAllCampaigns: (campaigns: { id: number }[]) => void;
 }) {
   return (
     <div className="space-y-4">

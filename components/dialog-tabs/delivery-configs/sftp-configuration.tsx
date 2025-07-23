@@ -6,7 +6,15 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Server, TestTube } from "lucide-react"
 
-export function SftpConfiguration({ isTestingConnection, connectionStatus, onTestConnection }) {
+export function SftpConfiguration({ 
+  isTestingConnection, 
+  connectionStatus, 
+  onTestConnection 
+}: {
+  isTestingConnection: boolean;
+  connectionStatus: string | null;
+  onTestConnection: () => void;
+}) {
   return (
     <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
       <h4 className="font-medium flex items-center gap-2">

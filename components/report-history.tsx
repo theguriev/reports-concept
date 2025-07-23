@@ -386,7 +386,15 @@ const reportHistoryData = {
   },
 }
 
-export default function ReportHistory({ configId, configName, onBack }) {
+export default function ReportHistory({ 
+  configId, 
+  configName, 
+  onBack 
+}: {
+  configId: string | null;
+  configName: string | null;
+  onBack: () => void;
+}) {
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [dateFilter, setDateFilter] = useState("all")
@@ -394,7 +402,8 @@ export default function ReportHistory({ configId, configName, onBack }) {
 
   // Get all reports from all configurations
   const getAllReports = () => {
-    const allReports = []
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const allReports: any[] = []
     Object.entries(reportHistoryData).forEach(([id, data]) => {
       data.reports.forEach(report => {
         allReports.push({
@@ -406,19 +415,15 @@ export default function ReportHistory({ configId, configName, onBack }) {
         })
       })
     })
-    return allReports.sort((a, b) => new Date(b.generatedAt) - new Date(a.generatedAt))
+    return allReports.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime())
   }
 
-  const historyData = configId ? (reportHistoryData[configId] || { reports: [] }) : { reports: getAllReports() }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const historyData = configId ? ((reportHistoryData as any)[configId] || { reports: [] }) : { reports: getAllReports() }
   const { configName: singleConfigName, configType, deliveryMethod, reports } = historyData
 
-  // Debug logging
-  console.log("configId:", configId, "type:", typeof configId)
-  console.log("reportHistoryData keys:", Object.keys(reportHistoryData))
-  console.log("historyData:", historyData)
-  console.log("reports:", reports)
-
-  const filteredReports = reports.filter((report) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filteredReports = reports.filter((report: any) => {
     const matchesSearch = report.generatedAt.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          (report.configName && report.configName.toLowerCase().includes(searchQuery.toLowerCase()))
     const matchesStatus = statusFilter === "all" || report.status === statusFilter
@@ -426,7 +431,7 @@ export default function ReportHistory({ configId, configName, onBack }) {
     return matchesSearch && matchesStatus && matchesConfig
   })
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case "delivered":
       case "downloaded":
@@ -442,7 +447,7 @@ export default function ReportHistory({ configId, configName, onBack }) {
     }
   }
 
-  const getStatusBadge = (status) => {
+  const getStatusBadge = (status: string) => {
     const colors = {
       delivered: "bg-green-100 text-green-800",
       downloaded: "bg-green-100 text-green-800",
@@ -450,10 +455,11 @@ export default function ReportHistory({ configId, configName, onBack }) {
       partial: "bg-yellow-100 text-yellow-800",
       generating: "bg-blue-100 text-blue-800",
     }
-    return colors[status] || "bg-gray-100 text-gray-800"
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (colors as any)[status] || "bg-gray-100 text-gray-800"
   }
 
-  const getDeliveryIcon = (method) => {
+  const getDeliveryIcon = (method: string) => {
     switch (method) {
       case "email":
         return <Mail className="h-4 w-4" />
@@ -468,7 +474,8 @@ export default function ReportHistory({ configId, configName, onBack }) {
     }
   }
 
-  const handleDownload = (report) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDownload = (report: any) => {
     // Simulate download
     const link = document.createElement("a")
     link.href = report.downloadUrl
@@ -564,7 +571,8 @@ export default function ReportHistory({ configId, configName, onBack }) {
 
       {/* Reports List */}
       <div className="space-y-4">
-        {filteredReports.map((report) => (
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {filteredReports.map((report: any) => (
           <Card key={report.id} className="hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
               <div className="flex justify-between items-start">
@@ -690,17 +698,20 @@ export default function ReportHistory({ configId, configName, onBack }) {
               </div>
               <div>
                 <p className="text-2xl font-bold text-green-600">
-                  {reports.filter((r) => r.status === "delivered" || r.status === "downloaded").length}
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {reports.filter((r: any) => r.status === "delivered" || r.status === "downloaded").length}
                 </p>
                 <p className="text-sm text-gray-600">Successful</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-red-600">{reports.filter((r) => r.status === "failed").length}</p>
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                <p className="text-2xl font-bold text-red-600">{reports.filter((r: any) => r.status === "failed").length}</p>
                 <p className="text-sm text-gray-600">Failed</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-yellow-600">
-                  {reports.filter((r) => r.status === "partial").length}
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {reports.filter((r: any) => r.status === "partial").length}
                 </p>
                 <p className="text-sm text-gray-600">Partial</p>
               </div>

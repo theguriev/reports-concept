@@ -76,6 +76,12 @@ export function CampaignSelectionTable({
   onCampaignSearchChange,
   onCampaignToggle,
   onSelectAllCampaigns,
+}: {
+  selectedCampaigns: string[];
+  campaignSearchQuery: string;
+  onCampaignSearchChange: (value: string) => void;
+  onCampaignToggle: (campaignId: string) => void;
+  onSelectAllCampaigns: (campaigns: { id: number }[]) => void;
 }) {
   const filteredCampaigns = campaigns.filter(
     (campaign) =>
@@ -123,8 +129,8 @@ export function CampaignSelectionTable({
               <div className="flex items-center gap-3">
                 <Checkbox
                   id={`campaign-${campaign.id}`}
-                  checked={selectedCampaigns.includes(campaign.id)}
-                  onCheckedChange={() => onCampaignToggle(campaign.id)}
+                  checked={selectedCampaigns.includes(campaign.id.toString())}
+                  onCheckedChange={() => onCampaignToggle(campaign.id.toString())}
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">

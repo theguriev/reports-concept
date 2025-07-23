@@ -9,7 +9,8 @@ export default function ReportsNavigation() {
   const [selectedConfigId, setSelectedConfigId] = useState(null)
   const [selectedConfigName, setSelectedConfigName] = useState(null)
 
-  const handleViewHistory = (configId, configName) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleViewHistory = (configId: any, configName: any) => {
     setSelectedConfigId(configId)
     setSelectedConfigName(configName)
     setCurrentView("history")

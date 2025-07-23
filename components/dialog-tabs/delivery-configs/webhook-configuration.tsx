@@ -7,7 +7,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { Webhook, TestTube } from "lucide-react"
 
-export function WebhookConfiguration({ isTestingConnection, connectionStatus, onTestConnection }) {
+export function WebhookConfiguration({ 
+  isTestingConnection, 
+  connectionStatus, 
+  onTestConnection 
+}: {
+  isTestingConnection: boolean;
+  connectionStatus: string | null;
+  onTestConnection: () => void;
+}) {
   return (
     <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
       <h4 className="font-medium flex items-center gap-2">
