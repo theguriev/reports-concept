@@ -26,7 +26,7 @@ import {
 // Update the reportHistoryData with more comprehensive test data for all configurations
 
 const reportHistoryData = {
-  1: {
+  "1": {
     configName: "Daily Campaign Summary",
     configType: "Campaign",
     deliveryMethod: "email",
@@ -123,7 +123,7 @@ const reportHistoryData = {
       },
     ],
   },
-  2: {
+  "2": {
     configName: "Weekly Abandoned Cart Report",
     configType: "Abandoned Cart",
     deliveryMethod: "sftp",
@@ -180,7 +180,7 @@ const reportHistoryData = {
       },
     ],
   },
-  3: {
+  "3": {
     configName: "Monthly Performance Report",
     configType: "Customer",
     deliveryMethod: "webhook",
@@ -238,7 +238,7 @@ const reportHistoryData = {
       },
     ],
   },
-  4: {
+  "4": {
     configName: "Customer Engagement Analysis",
     configType: "Customer",
     deliveryMethod: "manual",
@@ -317,7 +317,7 @@ const reportHistoryData = {
       },
     ],
   },
-  5: {
+  "5": {
     configName: "Revenue Dashboard Export",
     configType: "Revenue",
     deliveryMethod: "manual",
@@ -390,7 +390,7 @@ export default function ReportHistory({ configId, configName, onBack }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [dateFilter, setDateFilter] = useState("all")
-  const [configFilter, setConfigFilter] = useState(configId ? configId.toString() : "all")
+  const [configFilter, setConfigFilter] = useState(configId || "all")
 
   // Get all reports from all configurations
   const getAllReports = () => {
@@ -411,6 +411,12 @@ export default function ReportHistory({ configId, configName, onBack }) {
 
   const historyData = configId ? (reportHistoryData[configId] || { reports: [] }) : { reports: getAllReports() }
   const { configName: singleConfigName, configType, deliveryMethod, reports } = historyData
+
+  // Debug logging
+  console.log("configId:", configId, "type:", typeof configId)
+  console.log("reportHistoryData keys:", Object.keys(reportHistoryData))
+  console.log("historyData:", historyData)
+  console.log("reports:", reports)
 
   const filteredReports = reports.filter((report) => {
     const matchesSearch = report.generatedAt.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -476,7 +482,7 @@ export default function ReportHistory({ configId, configName, onBack }) {
       <div className="flex items-center gap-4 mb-6">
         <Button variant="ghost" size="sm" onClick={onBack}>
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Configuration
+          Back to Reports
         </Button>
       </div>
 
@@ -566,6 +572,9 @@ export default function ReportHistory({ configId, configName, onBack }) {
                   {getStatusIcon(report.status)}
                   <div>
                     <CardTitle className="text-lg">{report.generatedAt}</CardTitle>
+                    {!configId && report.configName && (
+                      <p className="text-sm text-gray-600 mt-1">{report.configName}</p>
+                    )}
                     <div className="flex items-center gap-2 mt-1">
                       <Badge className={getStatusBadge(report.status)}>{report.status}</Badge>
                       {report.format && (

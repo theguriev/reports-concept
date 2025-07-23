@@ -1,7 +1,14 @@
 "use client"
 
-import ReportsNavigation from "../components/reports-navigation"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
-export default function Page() {
-  return <ReportsNavigation />
+export default function HomePage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.push("/reports")
+  }, [router])
+
+  return null
 }

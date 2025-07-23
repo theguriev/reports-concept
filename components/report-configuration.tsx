@@ -149,7 +149,7 @@ const reportConfigurations = [
   },
 ]
 
-export default function ReportConfiguration({ onViewHistory }) {
+export default function ReportConfiguration({ onViewHistory, onViewAllHistory }) {
   const [configurations, setConfigurations] = useState(reportConfigurations)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [editingConfiguration, setEditingConfiguration] = useState(null)
@@ -248,15 +248,21 @@ export default function ReportConfiguration({ onViewHistory }) {
             Create and manage report configurations with scheduled or manual delivery
           </p>
         </div>
-        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              Create Configuration
-            </Button>
-          </DialogTrigger>
-          <CreateConfigurationDialog onClose={() => setIsCreateDialogOpen(false)} />
-        </Dialog>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={onViewAllHistory}>
+            <History className="h-4 w-4 mr-2" />
+            View All Reports
+          </Button>
+          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="flex items-center gap-2">
+                <Plus className="h-4 w-4" />
+                Create Configuration
+              </Button>
+            </DialogTrigger>
+            <CreateConfigurationDialog onClose={() => setIsCreateDialogOpen(false)} />
+          </Dialog>
+        </div>
       </div>
 
       {/* Filters and Search */}

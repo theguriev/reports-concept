@@ -15,6 +15,12 @@ export default function ReportsNavigation() {
     setCurrentView("history")
   }
 
+  const handleViewAllHistory = () => {
+    setSelectedConfigId(null)
+    setSelectedConfigName(null)
+    setCurrentView("history")
+  }
+
   const handleBackToConfiguration = () => {
     setCurrentView("configuration")
     setSelectedConfigId(null)
@@ -27,8 +33,7 @@ export default function ReportsNavigation() {
 
   return (
     <div className="min-h-screen">
-
-      <ReportConfiguration onViewHistory={handleViewHistory} />
+      <ReportConfiguration onViewHistory={handleViewHistory} onViewAllHistory={handleViewAllHistory} />
     </div>
   )
 }
