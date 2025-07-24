@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import {
   Plus,
   MoreHorizontal,
@@ -23,7 +22,6 @@ import {
   User,
   History,
 } from "lucide-react"
-import { CreateConfigurationDialog } from "./create-configuration-dialog"
 
 // Sample data for report configurations with status
 const reportConfigurations = [
@@ -151,13 +149,14 @@ const reportConfigurations = [
 
 export default function ReportConfiguration({ 
   onViewHistory, 
-  onViewAllHistory 
+  onViewAllHistory,
+  onCreateConfiguration
 }: {
   onViewHistory: (configId: string | number, configName: string) => void;
   onViewAllHistory: () => void;
+  onCreateConfiguration: () => void;
 }) {
   const [configurations, setConfigurations] = useState(reportConfigurations)
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState("date-desc")
   const [generatingReports, setGeneratingReports] = useState(new Set())
@@ -259,15 +258,10 @@ export default function ReportConfiguration({
             <History className="h-4 w-4 mr-2" />
             View All Reports
           </Button>
-          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                Create Configuration
-              </Button>
-            </DialogTrigger>
-            <CreateConfigurationDialog onClose={() => setIsCreateDialogOpen(false)} />
-          </Dialog>
+          <Button className="flex items-center gap-2" onClick={onCreateConfiguration}>
+            <Plus className="h-4 w-4" />
+            Create Configuration
+          </Button>
         </div>
       </div>
 
@@ -429,7 +423,7 @@ export default function ReportConfiguration({
                 : "Create your first report configuration to get started"}
             </p>
             {!searchQuery && (
-              <Button onClick={() => setIsCreateDialogOpen(true)}>
+              <Button onClick={onCreateConfiguration}>
                 <Plus className="h-4 w-4 mr-2" />
                 Create Configuration
               </Button>

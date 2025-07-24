@@ -14,10 +14,15 @@ export default function ReportsPage() {
     router.push("/reports/history")
   }
 
+  const handleCreateConfiguration = () => {
+    router.push("/reports/create")
+  }
+
   return (
     <ReportConfiguration 
-      onViewHistory={handleViewHistory} 
-      onViewAllHistory={handleViewAllHistory} 
+      onViewHistory={handleViewHistory}
+      onViewAllHistory={handleViewAllHistory}
+      onCreateConfiguration={handleCreateConfiguration}
     />
   )
 }
