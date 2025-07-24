@@ -389,11 +389,15 @@ const reportHistoryData = {
 export default function ReportHistory({ 
   configId, 
   configName, 
-  onBack 
+  onBack,
+  showBackButton = true,
+  onViewConfiguration
 }: {
   configId: string | null;
   configName: string | null;
   onBack: () => void;
+  showBackButton?: boolean;
+  onViewConfiguration?: (configId: string) => void;
 }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
@@ -497,16 +501,18 @@ export default function ReportHistory({
   return (
     <div className="container mx-auto p-6 max-w-6xl">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <Button variant="ghost" size="sm" onClick={onBack}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Reports
-        </Button>
-      </div>
+      {showBackButton && (
+        <div className="flex items-center gap-4 mb-6">
+          <Button variant="ghost" size="sm" onClick={onBack}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Reports
+          </Button>
+        </div>
+      )}
 
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          {configId ? "Report History" : "All Reports History"}
+          {configId ? "Report History" : "All Reports"}
         </h1>
         {configId ? (
           <div className="flex items-center gap-2 text-gray-600">
@@ -521,7 +527,7 @@ export default function ReportHistory({
           </div>
         ) : (
           <p className="text-gray-600">
-            View delivery history for all report configurations
+            All report deliveries across configurations
           </p>
         )}
       </div>
@@ -592,7 +598,19 @@ export default function ReportHistory({
                   <div>
                     <CardTitle className="text-lg">{report.generatedAt}</CardTitle>
                     {!configId && report.configName && (
-                      <p className="text-sm text-gray-600 mt-1">{report.configName}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-sm text-gray-600">{report.configName}</p>
+                        {onViewConfiguration && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="h-6 px-2 text-xs"
+                            onClick={() => onViewConfiguration(report.configId)}
+                          >
+                            View Config
+                          </Button>
+                        )}
+                      </div>
                     )}
                     <div className="flex items-center gap-2 mt-1">
                       <Badge className={getStatusBadge(report.status)}>{report.status}</Badge>

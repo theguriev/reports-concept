@@ -149,11 +149,9 @@ const reportConfigurations = [
 
 export default function ReportConfiguration({ 
   onViewHistory, 
-  onViewAllHistory,
   onCreateConfiguration
 }: {
   onViewHistory: (configId: string | number, configName: string) => void;
-  onViewAllHistory: () => void;
   onCreateConfiguration: () => void;
 }) {
   const [configurations, setConfigurations] = useState(reportConfigurations)
@@ -245,26 +243,6 @@ export default function ReportConfiguration({
 
   return (
     <div className="container mx-auto p-6 max-w-6xl">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Report Configuration</h1>
-          <p className="text-gray-600 mt-2">
-            Create and manage report configurations with scheduled or manual delivery
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={onViewAllHistory}>
-            <History className="h-4 w-4 mr-2" />
-            View All Reports
-          </Button>
-          <Button className="flex items-center gap-2" onClick={onCreateConfiguration}>
-            <Plus className="h-4 w-4" />
-            Create Configuration
-          </Button>
-        </div>
-      </div>
-
       {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div className="flex items-center gap-4">

@@ -1,20 +1,21 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import ReportHistory from "@/components/report-history"
+import { useEffect } from "react"
 
-export default function AllReportsHistoryPage() {
+export default function ReportsHistoryPage() {
   const router = useRouter()
 
-  const handleBack = () => {
-    router.push("/reports")
-  }
+  useEffect(() => {
+    // Redirect to the new main reports page
+    router.replace("/reports")
+  }, [router])
 
   return (
-    <ReportHistory 
-      configId={null} 
-      configName={null} 
-      onBack={handleBack} 
-    />
+    <div className="container mx-auto p-6 max-w-6xl">
+      <div className="text-center">
+        <p className="text-gray-600">Redirecting to reports...</p>
+      </div>
+    </div>
   )
 }

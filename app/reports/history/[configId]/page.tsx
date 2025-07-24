@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useParams, useSearchParams } from "next/navigation"
-import ReportHistory from "@/components/report-history"
+import { useEffect } from "react"
 
 export default function ConfigReportHistoryPage() {
   const router = useRouter()
@@ -11,15 +11,17 @@ export default function ConfigReportHistoryPage() {
   const configId = params.configId as string
   const configName = searchParams.get("name")
 
-  const handleBack = () => {
-    router.push("/reports")
-  }
+  useEffect(() => {
+    // Redirect to the new configuration history page
+    const newUrl = `/reports/configurations/${configId}/history${configName ? `?name=${encodeURIComponent(configName)}` : ''}`
+    router.replace(newUrl)
+  }, [router, configId, configName])
 
   return (
-    <ReportHistory 
-      configId={configId} 
-      configName={configName} 
-      onBack={handleBack} 
-    />
+    <div className="container mx-auto p-6 max-w-6xl">
+      <div className="text-center">
+        <p className="text-gray-600">Redirecting to configuration history...</p>
+      </div>
+    </div>
   )
 }
